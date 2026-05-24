@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Srinu — BBA Student & Aspiring Business Strategist</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --off-black: #111111;
+    --dark: #161616;
+    --cream: #f5f0e8;
+    --warm-white: #faf8f4;
+    --accent: #e8c547;
+    --accent2: #d4a843;
+    --grey: #888888;
+    --light-grey: #cccccc;
+    --border: #2a2a2a;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--warm-white);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+  }
+  .cursor-follower {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(232,197,71,0.4);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: normal;
+  }
+  nav::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--warm-white);
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+  }
+  .nav-links {
+    display: flex; gap: 40px;
+    list-style: none;
+    position: relative; z-index: 1;
+  }
+  .nav-links a {
+    color: var(--light-grey);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 30%, rgba(232,197,71,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(232,197,71,0.04) 0%, transparent 50%),
+      var(--black);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.6;
+  }
+  .hero-eyebrow {
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    position: relative;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+  .hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 14vw, 200px);
+    line-height: 0.88;
+    letter-spacing: -2px;
+    position: relative;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+  .hero-name span {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(250,248,244,0.3);
+  }
+  .hero-tagline-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 40px;
+    position: relative;
+    animation: fadeUp 0.8s ease 0.6s both;
+  }
+  .hero-tagline {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 32px);
+    color: var(--cream);
+    max-width: 500px;
+    line-height: 1.4;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--accent);
+    color: var(--black);
+    padding: 16px 32px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--black);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  .hero-cta:hover::before { transform: translateX(0); }
+  .hero-cta:hover { color: var(--accent); }
+  .hero-cta span { position: relative; z-index: 1; }
+  .hero-scroll {
+    position: absolute;
+    right: 48px; bottom: 80px;
+    writing-mode: vertical-rl;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--grey);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeIn 1s ease 1s both;
+  }
+  .hero-scroll::before {
+    content: '';
+    width: 1px; height: 60px;
+    background: var(--grey);
+    animation: grow 1.5s ease 1.5s both;
+  }
+  @keyframes grow { from { height: 0; } to { height: 60px; } }
+
+  /* MARQUEE */
+  .marquee-section {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 0;
+    background: var(--off-black);
+    overflow: hidden;
+  }
+  .marquee-track {
+    display: flex;
+    gap: 0;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 24px;
+    padding: 0 24px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: var(--grey);
+  }
+  .marquee-item .dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTIONS */
+  section { padding: 120px 48px; }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 0.9;
+    letter-spacing: -1px;
+    margin-bottom: 60px;
+  }
+
+  /* ABOUT */
+  .about { background: var(--off-black); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .about-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--light-grey);
+    font-weight: 300;
+  }
+  .about-text strong { color: var(--warm-white); font-weight: 500; }
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .stat-card {
+    background: var(--dark);
+    padding: 36px 28px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .stat-card:hover { border-color: var(--accent); }
+  .stat-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--accent);
+    transition: height 0.4s ease;
+  }
+  .stat-card:hover::before { height: 100%; }
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: var(--grey);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* EXPERIENCE */
+  .experience { background: var(--black); }
+  .exp-list { display: flex; flex-direction: column; gap: 2px; }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 280px 1fr auto;
+    align-items: start;
+    gap: 48px;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .exp-item:hover { padding-left: 16px; }
+  .exp-role {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    line-height: 1.3;
+    color: var(--warm-white);
+  }
+  .exp-role em {
+    display: block;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--accent);
+    font-family: 'Outfit', sans-serif;
+    margin-top: 4px;
+  }
+  .exp-desc {
+    font-size: 15px;
+    color: var(--grey);
+    line-height: 1.8;
+  }
+  .exp-tag {
+    display: inline-block;
+    border: 1px solid var(--border);
+    padding: 6px 16px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--grey);
+    white-space: nowrap;
+    align-self: flex-start;
+  }
+
+  /* SKILLS */
+  .skills-section { background: var(--dark); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .skill-card {
+    background: var(--off-black);
+    padding: 40px 36px;
+    border: 1px solid var(--border);
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-card:hover {
+    background: var(--dark);
+    transform: translateY(-4px);
+    border-color: var(--accent);
+  }
+  .skill-icon {
+    font-size: 32px;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .skill-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    margin-bottom: 12px;
+    color: var(--warm-white);
+  }
+  .skill-desc {
+    font-size: 14px;
+    color: var(--grey);
+    line-height: 1.7;
+  }
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .skill-tag {
+    background: var(--border);
+    padding: 4px 12px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--light-grey);
+    border-radius: 2px;
+  }
+
+  /* EDUCATION */
+  .education { background: var(--black); }
+  .edu-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .edu-card {
+    background: var(--off-black);
+    border: 1px solid var(--border);
+    padding: 60px 48px;
+    position: relative;
+  }
+  .edu-card::after {
+    content: '🎓';
+    position: absolute;
+    top: 40px; right: 40px;
+    font-size: 48px;
+    opacity: 0.15;
+  }
+  .edu-degree {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--accent);
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+  }
+  .edu-school {
+    font-size: 20px;
+    color: var(--warm-white);
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+  .edu-year {
+    font-size: 14px;
+    color: var(--grey);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .edu-courses {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .edu-course {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--light-grey);
+  }
+  .edu-course::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .edu-text h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px;
+    line-height: 1.3;
+    margin-bottom: 24px;
+  }
+  .edu-text p {
+    font-size: 16px;
+    color: var(--grey);
+    line-height: 1.8;
+  }
+
+  /* LANGUAGES */
+  .lang-row {
+    display: flex;
+    gap: 48px;
+    margin-top: 48px;
+  }
+  .lang-item { flex: 1; }
+  .lang-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .lang-level {
+    font-size: 13px;
+    color: var(--grey);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .lang-bar {
+    height: 2px;
+    background: var(--border);
+    position: relative;
+  }
+  .lang-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 1s ease;
+  }
+
+  /* CONTACT */
+  .contact { background: var(--off-black); }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 8vw, 110px);
+    line-height: 0.88;
+    letter-spacing: -1px;
+  }
+  .contact-headline span {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(250,248,244,0.25);
+  }
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-top: 20px;
+  }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-decoration: none;
+    padding: 24px;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+  .contact-link:hover {
+    border-color: var(--accent);
+    background: rgba(232,197,71,0.04);
+  }
+  .contact-link-icon {
+    width: 44px; height: 44px;
+    background: var(--dark);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .contact-link-text { flex: 1; }
+  .contact-link-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 4px;
+  }
+  .contact-link-value {
+    font-size: 15px;
+    color: var(--warm-white);
+  }
+  .contact-link-arrow {
+    color: var(--grey);
+    font-size: 18px;
+    transition: transform 0.3s;
+  }
+  .contact-link:hover .contact-link-arrow { transform: translateX(6px); color: var(--accent); }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--grey);
+  }
+  .footer-copy {
+    font-size: 13px;
+    color: var(--grey);
+    letter-spacing: 1px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { gap: 20px; }
+    section { padding: 80px 24px; }
+    .hero { padding: 0 24px 60px; }
+    .hero-tagline-row { flex-direction: column; align-items: flex-start; gap: 24px; }
+    .about-grid, .skills-grid, .edu-block, .contact-inner { grid-template-columns: 1fr; }
+    .exp-item { grid-template-columns: 1fr; gap: 16px; }
+    .hero-scroll { display: none; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+    .lang-row { flex-direction: column; gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">SRINU</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-eyebrow">BBA Student · Business Administration · Class of 2027</div>
+  <h1 class="hero-name">
+    SRINU
+    <span>A.P.</span>
+  </h1>
+  <div class="hero-tagline-row">
+    <p class="hero-tagline">Organized, ambitious, and driven by a passion for management and corporate strategy.</p>
+    <a href="#contact" class="hero-cta"><span>Let's Connect</span><span>→</span></a>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="dot"></span>EVENT COORDINATION</span>
+    <span class="marquee-item"><span class="dot"></span>BUSINESS STRATEGY</span>
+    <span class="marquee-item"><span class="dot"></span>CONTENT CREATION</span>
+    <span class="marquee-item"><span class="dot"></span>BRANDING</span>
+    <span class="marquee-item"><span class="dot"></span>TEAM LEADERSHIP</span>
+    <span class="marquee-item"><span class="dot"></span>COMMUNICATION</span>
+    <span class="marquee-item"><span class="dot"></span>PHOTOGRAPHY</span>
+    <span class="marquee-item"><span class="dot"></span>MICROSOFT OFFICE</span>
+    <span class="marquee-item"><span class="dot"></span>EVENT COORDINATION</span>
+    <span class="marquee-item"><span class="dot"></span>BUSINESS STRATEGY</span>
+    <span class="marquee-item"><span class="dot"></span>CONTENT CREATION</span>
+    <span class="marquee-item"><span class="dot"></span>BRANDING</span>
+    <span class="marquee-item"><span class="dot"></span>TEAM LEADERSHIP</span>
+    <span class="marquee-item"><span class="dot"></span>COMMUNICATION</span>
+    <span class="marquee-item"><span class="dot"></span>PHOTOGRAPHY</span>
+    <span class="marquee-item"><span class="dot"></span>MICROSOFT OFFICE</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-label">About Me</div>
+  <div class="section-title">WHO I AM</div>
+  <div class="about-grid">
+    <div>
+      <p class="about-text">
+        I'm <strong>Srinu</strong>, a BBA undergraduate at <strong>Bishop Heber College, Trichy</strong>, graduating in 2027. With a strong foundation in business administration, I'm passionate about <strong>management, corporate strategy, and creative storytelling</strong>.
+        <br><br>
+        I thrive at the intersection of organization and creativity — whether coordinating large-scale events, leading student teams, or building an engaged online audience through photography. I bring <strong>analytical thinking, attention to detail, and genuine enthusiasm</strong> to everything I do.
+        <br><br>
+        Currently seeking internship opportunities to apply my skills and grow in a professional environment.
+      </p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-number">2027</div>
+        <div class="stat-label">Expected Graduation</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">BBA</div>
+        <div class="stat-label">Degree Program</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">9+</div>
+        <div class="stat-label">Skills Mastered</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Languages</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="section-label">Experience</div>
+  <div class="section-title">WHAT I'VE<br>DONE</div>
+  <div class="exp-list">
+
+    <div class="exp-item reveal">
+      <div class="exp-role">
+        Student Coordinator
+        <em>Bishop Heber College</em>
+      </div>
+      <div class="exp-desc">
+        Coordinated cultural and academic events by managing schedules, logistics, and communication among faculty and peers. Supervised student teams to support smooth event execution and effective collaboration under pressure. Managed resource allocation, participant coordination, and on-site troubleshooting — demonstrating leadership and adaptability. Earned consistent positive feedback for organizational efficiency while balancing academic commitments.
+      </div>
+      <div class="exp-tag">Leadership</div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-role">
+        Founder
+        <em>Flicker Fables · Instagram</em>
+      </div>
+      <div class="exp-desc">
+        Founded and managed a photography-focused Instagram page, creating and publishing original visual content to build audience engagement. Developed skills in branding, content strategy, and audience growth through consistent creative storytelling. Maintained posting schedules and tracked performance metrics — showcasing initiative, consistency, and self-management in
